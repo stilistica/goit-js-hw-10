@@ -40,30 +40,20 @@ refs.breedSelect.addEventListener('change', () => {
 });
 
 function displayCatInfo(cat) {
-  const catInfo = document.createElement('div');
-  catInfo.classList.add('cat-info');
-
-  const catImage = document.createElement('img');
-  catImage.src = cat.url;
-
-  const catName = document.createElement('h2');
-  catName.textContent = cat.name;
-
-  const catDescription = document.createElement('p');
-  catDescription.textContent = `Description: ${cat.description}`;
-
-  const catTemperament = document.createElement('p');
-  catTemperament.textContent = `Temperament: ${cat.temperament}`;
-
-  catInfo.appendChild(catImage);
-  catInfo.appendChild(catName);
-  catInfo.appendChild(catDescription);
-  catInfo.appendChild(catTemperament);
-
+  const catInfo = createCatInfoElement(cat);
   refs.catInfo.innerHTML = '';
   refs.catInfo.appendChild(catInfo);
   showCatInfo();
   hideLoader();
+}
+function createCatInfoElement({ url, name, description, temperament }) {
+  const catInfo = document.createElement('div');
+  catInfo.innerHTML = `
+  <img src="${url}" alt="${name}">
+    <h2>${name}</h2>
+    <p>Description: ${description}</p>
+    <p>Temperament: ${temperament}</p>`;
+  return catInfo;
 }
 
 function showLoader() {
