@@ -1,3 +1,8 @@
+import SlimSelect from 'slim-select';
+// new SlimSelect({
+//   select: '.breed-select',
+// });
+
 import { fetchBreeds, fetchCatByBreed } from './js/cat-api.js';
 
 const refs = {
@@ -9,17 +14,23 @@ const refs = {
 
 fetchBreeds()
   .then(breeds => {
-    breeds.forEach(breed => {
-      const option = document.createElement('option');
-      option.value = breed.id;
-      option.textContent = breed.name;
-      refs.breedSelect.appendChild(option);
+    const breedOptions = breeds.map(breed => ({
+      value: breed.id,
+      text: breed.name,
+    }));
+    // breedOptions.unshift({ value: '', text: 'Оберіть кота' });
+
+    new SlimSelect({
+      select: refs.breedSelect,
+      data: breedOptions,
+      placeholder: 'Select a breed',
     });
   })
   .catch(error => {
     console.log(error);
     showError();
   });
+
 
 refs.breedSelect.addEventListener('change', () => {
   const selectedBreedId = refs.breedSelect.value;
