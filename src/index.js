@@ -5,11 +5,6 @@ const refs = {
   loader: document.querySelector('.loader'),
   error: document.querySelector('.error'),
   catInfo: document.querySelector('.cat-info'),
-
-  catImage: document.querySelector('.cat-info img'),
-  catName: document.querySelector('.cat-info h2'),
-  catDescription: document.querySelector('.cat-info .cat-description'),
-  catTemperament: document.querySelector('.cat-info .cat-temperament'),
 };
 
 fetchBreeds()
@@ -21,7 +16,8 @@ fetchBreeds()
       refs.breedSelect.appendChild(option);
     });
   })
-  .catch(() => {
+  .catch(error => {
+    console.log(error);
     showError();
   });
 
@@ -34,7 +30,8 @@ refs.breedSelect.addEventListener('change', () => {
       .then(cat => {
         displayCatInfo(cat);
       })
-      .catch(() => {
+      .catch(error => {
+        console.log(error);
         showError();
       });
   } else {
@@ -43,10 +40,28 @@ refs.breedSelect.addEventListener('change', () => {
 });
 
 function displayCatInfo(cat) {
-  refs.catImage.src = cat.url;
-  refs.catName.textContent = cat.name;
-  refs.catDescription.textContent = `Description: ${cat.description}`;
-  refs.catTemperament.textContent = `Temperament: ${cat.temperament}`;
+  const catInfo = document.createElement('div');
+  catInfo.classList.add('cat-info');
+
+  const catImage = document.createElement('img');
+  catImage.src = cat.url;
+
+  const catName = document.createElement('h2');
+  catName.textContent = cat.name;
+
+  const catDescription = document.createElement('p');
+  catDescription.textContent = `Description: ${cat.description}`;
+
+  const catTemperament = document.createElement('p');
+  catTemperament.textContent = `Temperament: ${cat.temperament}`;
+
+  catInfo.appendChild(catImage);
+  catInfo.appendChild(catName);
+  catInfo.appendChild(catDescription);
+  catInfo.appendChild(catTemperament);
+
+  refs.catInfo.innerHTML = '';
+  refs.catInfo.appendChild(catInfo);
   showCatInfo();
   hideLoader();
 }

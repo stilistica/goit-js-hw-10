@@ -21,7 +21,7 @@ export const fetchBreeds = () => {
 };
 
 export const fetchCatByBreed = (breedId) => {
-  return fetch(`${BASE_URL}/images/search?breeds_ids=${breedId}`, {
+  return fetch(`${BASE_URL}/images/search?breed_ids=${breedId}`, {
     headers: {
       'x-api-key': API_KEY,
     },
