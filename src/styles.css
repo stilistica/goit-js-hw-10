@@ -1,0 +1,29 @@
+.loader {
+  display: none;
+  text-align: center;
+  font-weight: bold;
+}
+
+.error {
+  display: none;
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+
+.cat-info {
+  display: none;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.cat-info img {
+  width: 300px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.cat-info h2,
+.cat-info p {
+  margin: 0.5rem 0;
+}
