@@ -2,6 +2,8 @@ import SlimSelect from 'slim-select';
 // new SlimSelect({
 //   select: '.breed-select',
 // });
+import Notiflix from 'notiflix';
+import { Report } from 'notiflix/build/notiflix-report-aio';
 
 import { fetchBreeds, fetchCatByBreed } from './js/cat-api.js';
 
@@ -27,12 +29,18 @@ fetchBreeds()
     });
   })
   .catch(error => {
+    Report.failure(
+      'Notiflix Failure',
+      '"Failure is simply the opportunity to begin again, this time more intelligently." <br/><br/>- Henry Ford',
+      'Okay'
+    );
     console.log(error);
     showError();
   });
 
 
 refs.breedSelect.addEventListener('change', () => {
+  refs.catInfo.innerHTML = '';
   const selectedBreedId = refs.breedSelect.value;
   if (selectedBreedId) {
     showLoader();
@@ -42,6 +50,11 @@ refs.breedSelect.addEventListener('change', () => {
         displayCatInfo(cat);
       })
       .catch(error => {
+        Report.failure(
+          'Notiflix Failure',
+          '"Failure is simply the opportunity to begin again, this time more intelligently." <br/><br/>- Henry Ford',
+          'Okay'
+        );
         console.log(error);
         showError();
       });
@@ -51,6 +64,8 @@ refs.breedSelect.addEventListener('change', () => {
 });
 
 function displayCatInfo(cat) {
+  refs.catInfo.style.backgroundColor = '#777777';
+  refs.catInfo.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.3)';
   const catInfo = createCatInfoElement(cat);
   refs.catInfo.innerHTML = '';
   refs.catInfo.appendChild(catInfo);
@@ -69,6 +84,8 @@ function createCatInfoElement({ url, name, description, temperament }) {
 
 function showLoader() {
   refs.loader.style.display = 'block';
+  refs.catInfo.style.backgroundColor = 'transparent';
+  refs.catInfo.style.boxShadow = 'none';
 }
 
 function hideLoader() {
