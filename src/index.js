@@ -2,10 +2,12 @@ import SlimSelect from 'slim-select';
 // new SlimSelect({
 //   select: '.breed-select',
 // });
-import Notiflix from 'notiflix';
+
 import { Report } from 'notiflix/build/notiflix-report-aio';
 
 import { fetchBreeds, fetchCatByBreed } from './js/cat-api.js';
+
+
 
 const refs = {
   breedSelect: document.querySelector('.breed-select'),
@@ -29,11 +31,6 @@ fetchBreeds()
     });
   })
   .catch(error => {
-    Report.failure(
-      'Notiflix Failure',
-      '"Failure is simply the opportunity to begin again, this time more intelligently." <br/><br/>- Henry Ford',
-      'Okay'
-    );
     console.log(error);
     showError();
   });
@@ -50,13 +47,14 @@ refs.breedSelect.addEventListener('change', () => {
         displayCatInfo(cat);
       })
       .catch(error => {
-        Report.failure(
-          'Notiflix Failure',
-          '"Failure is simply the opportunity to begin again, this time more intelligently." <br/><br/>- Henry Ford',
-          'Okay'
-        );
+        Report.failure('Помилка', 'Такого котика не знайдено(', 'Оберіть іншого)');
+        Report.success('Title', 'Message', 'Button Text', {
+          width: '360px',
+          svgSize: '120px',
+        });
         console.log(error);
-        showError();
+        hideLoader();
+        // showError();
       });
   } else {
     hideCatInfo();
@@ -70,6 +68,7 @@ function displayCatInfo(cat) {
   refs.catInfo.innerHTML = '';
   refs.catInfo.appendChild(catInfo);
   showCatInfo();
+  // showError();
   hideLoader();
 }
 function createCatInfoElement({ url, name, description, temperament }) {
