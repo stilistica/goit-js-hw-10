@@ -47,7 +47,7 @@ refs.breedSelect.addEventListener('change', () => {
         displayCatInfo(cat);
       })
       .catch(error => {
-        Report.failure('Помилка', 'Такого котика не знайдено(', 'Оберіть іншого)');
+        Report.failure('Помилка', error.message, 'Добре');
         Report.success('Title', 'Message', 'Button Text', {
           width: '360px',
           svgSize: '120px',
